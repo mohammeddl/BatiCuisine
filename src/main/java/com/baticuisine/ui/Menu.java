@@ -3,8 +3,20 @@ import java.util.Scanner;
 
 import main.java.com.baticuisine.model.Client;
 import main.java.com.baticuisine.model.Project;
+import main.java.com.baticuisine.service.ClientService;
+import main.java.com.baticuisine.service.ProjectService;
 
 public class Menu {
+
+    private final ProjectService projectService;
+    private final ClientService clientService;
+
+    public Menu(ProjectService projectService, ClientService clientService) {
+        this.projectService = projectService;
+        this.clientService = clientService;
+    }
+
+
     
     private Scanner scanner = new Scanner(System.in);
 
@@ -58,7 +70,7 @@ public class Menu {
         if (clientChoice == 1) {
             System.out.print("Enter the client's name: ");
             String clientName = scanner.nextLine();
-
+            client = clientService.getClientByName(clientName);
         } else {
             client = createNewClient(scanner);
         }
@@ -66,7 +78,8 @@ public class Menu {
         System.out.print("Enter the project name: ");
         String projectName = scanner.nextLine();
 
-       
+        Project project = new Project(projectName, client);
+        projectService.addProject(project);
         System.out.println("Project created successfully!");
     }
 
@@ -83,12 +96,17 @@ public class Menu {
 
         System.out.print("Is the client a professional? (true/false): ");
         boolean isProfessional = scanner.nextBoolean();
-         return new Client(name, address, phone, isProfessional);
+
+        Client client = new Client(name, address, phone, isProfessional);
+        clientService.addClient(client);
+        return client;
     }
 
     private void calculateProjectCost(Scanner scanner) {
         System.out.print("Enter the project name to calculate cost: ");
         String projectName = scanner.nextLine();
-      
+        projectService.calculateProjectCost(projectName);
     }
+
+
 }

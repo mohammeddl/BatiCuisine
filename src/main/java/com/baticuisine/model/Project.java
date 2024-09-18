@@ -24,6 +24,11 @@ public class Project {
         this.components = new ArrayList<>();
     }
 
+    public Project(String projectName, Client client) {
+        this.projectName = projectName;
+        this.client = client;
+    }
+
     // Getters and Setters
     
     public int getId() {
@@ -74,5 +79,13 @@ public class Project {
         components.add(component);
     }
 
+
+    public double calculateTotalCost() {
+        double totalCost = 0;
+        for (Component component : components) {
+            totalCost += component.calculateCost();
+        }
+        return totalCost;
+    }
 
 }
