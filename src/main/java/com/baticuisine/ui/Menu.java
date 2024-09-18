@@ -85,6 +85,7 @@ public class Menu {
 
 
     private Client createNewClient(Scanner scanner) {
+        int id = 1;
         System.out.print("Enter the client name: ");
         String name = scanner.nextLine();
 
@@ -97,7 +98,7 @@ public class Menu {
         System.out.print("Is the client a professional? (true/false): ");
         boolean isProfessional = scanner.nextBoolean();
 
-        Client client = new Client(name, address, phone, isProfessional);
+        Client client = new Client(id++, name, address, phone, isProfessional);
         clientService.addClient(client);
         return client;
     }

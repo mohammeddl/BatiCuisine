@@ -13,7 +13,7 @@ public class ClientRepositoryImplt implements ClientRepository {
 
     public Client getClientByName(String name) {
         return clients.stream()
-                .filter(client -> client.getClientName().equalsIgnoreCase(name))
+                .filter(client -> client.getName().equalsIgnoreCase(name))
                 .findFirst()
                 .orElse(null);
     }
