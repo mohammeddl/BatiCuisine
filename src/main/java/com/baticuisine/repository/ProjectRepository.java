@@ -1,4 +1,4 @@
-package main.java.com.baticuisine.service;
+package main.java.com.baticuisine.repository;
 
 import main.java.com.baticuisine.model.Project;
 import java.util.List;
