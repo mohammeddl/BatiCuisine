@@ -1,6 +1,9 @@
 package main.java.com.baticuisine.ui;
 import java.util.Scanner;
 
+import main.java.com.baticuisine.model.Client;
+import main.java.com.baticuisine.model.Project;
+
 public class Menu {
     
     private Scanner scanner = new Scanner(System.in);
@@ -42,5 +45,50 @@ public class Menu {
 
 
 
-    
+    private void createNewProject(Scanner scanner) {
+        System.out.println("--- Project Creation ---");
+
+        // Client selection or creation
+        System.out.println("1. Search for an existing client");
+        System.out.println("2. Add a new client");
+        int clientChoice = scanner.nextInt();
+        scanner.nextLine();
+
+        Client client;
+        if (clientChoice == 1) {
+            System.out.print("Enter the client's name: ");
+            String clientName = scanner.nextLine();
+
+        } else {
+            client = createNewClient(scanner);
+        }
+
+        System.out.print("Enter the project name: ");
+        String projectName = scanner.nextLine();
+
+       
+        System.out.println("Project created successfully!");
+    }
+
+
+    private Client createNewClient(Scanner scanner) {
+        System.out.print("Enter the client name: ");
+        String name = scanner.nextLine();
+
+        System.out.print("Enter the client address: ");
+        String address = scanner.nextLine();
+
+        System.out.print("Enter the client phone number: ");
+        String phone = scanner.nextLine();
+
+        System.out.print("Is the client a professional? (true/false): ");
+        boolean isProfessional = scanner.nextBoolean();
+         return new Client(name, address, phone, isProfessional);
+    }
+
+    private void calculateProjectCost(Scanner scanner) {
+        System.out.print("Enter the project name to calculate cost: ");
+        String projectName = scanner.nextLine();
+      
+    }
 }
