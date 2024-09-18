@@ -1,4 +1,4 @@
-package main.java.com.workpal.config;
+package main.java.com.baticuisine.config;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -10,7 +10,7 @@ public class DatabaseConnection{
     private Connection connection;
     private static DatabaseConnection instance;
 
-    private static final String URL = "jdbc:postgresql://localhost:5432/workpal";
+    private static final String URL = "jdbc:postgresql://localhost:5432/baticuisine";
     private static final String USER = "postgres";
     private static final String PASSWORD = "0074";
 
