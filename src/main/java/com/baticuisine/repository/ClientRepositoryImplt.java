@@ -15,6 +15,7 @@ public class ClientRepositoryImplt implements ClientRepository {
         this.clientDaoImplt = clientDaoImplt;
     }
 
+    
     public void addClient(Client client) {
         clientDaoImplt.addClient(client);
     }
