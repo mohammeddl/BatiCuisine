@@ -3,15 +3,15 @@ import java.util.Scanner;
 
 import main.java.com.baticuisine.model.Client;
 import main.java.com.baticuisine.model.Project;
-import main.java.com.baticuisine.service.ClientService;
+import main.java.com.baticuisine.service.ClientServiceImplt;
 import main.java.com.baticuisine.service.ProjectService;
 
 public class Menu {
 
     private final ProjectService projectService;
-    private final ClientService clientService;
+    private final ClientServiceImplt clientService;
 
-    public Menu(ProjectService projectService, ClientService clientService) {
+    public Menu(ProjectService projectService, ClientServiceImplt clientService) {
         this.projectService = projectService;
         this.clientService = clientService;
     }
