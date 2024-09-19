@@ -15,6 +15,7 @@ public class ProjectService {
 
     public void addProject(Project project) {
         projectRepositoryImplt.addProject(project);
+        System.out.println("Project created successfully!");
     }
 
     public void displayProjects() {
