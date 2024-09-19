@@ -1,5 +1,10 @@
 package main.java.com.baticuisine.dao;
 
-public class ProjectDao {
+import main.java.com.baticuisine.model.Project;
+
+public interface ProjectDao {
+
+    public void addProject(Project project);
+
     
 }

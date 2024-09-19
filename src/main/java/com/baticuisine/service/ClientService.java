@@ -12,12 +12,12 @@ public class ClientService {
     }
 
     public void addClient(Client client) {
-        if (clientRepository.getClientByName(client.getName()) != null) {
-            System.out.println("Client with this name already exists.");
-        } else {
+        // if (clientRepository.getClientByName(client.getName()) != null) {
+        //     System.out.println("Client with this name already exists.");
+        // } else {
             clientRepository.addClient(client);
             System.out.println("Client added successfully.");
-        }
+        // }
     }
 
     public Client getClientByName(String name) {
