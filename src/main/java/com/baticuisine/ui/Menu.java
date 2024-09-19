@@ -36,7 +36,7 @@ public class Menu {
 
             switch (choice) {
                 case 1:
-                    System.out.println("Creating a new project...");
+                    createNewProject();
                     break;
                 case 2:
                     System.out.println("Showing existing projects...");
@@ -57,10 +57,8 @@ public class Menu {
 
 
 
-    private void createNewProject(Scanner scanner) {
+    private void createNewProject() {
         System.out.println("--- Project Creation ---");
-
-        // Client selection or creation
         System.out.println("1. Search for an existing client");
         System.out.println("2. Add a new client");
         int clientChoice = scanner.nextInt();
@@ -72,7 +70,7 @@ public class Menu {
             String clientName = scanner.nextLine();
             client = clientService.getClientByName(clientName);
         } else {
-            client = createNewClient(scanner);
+            client = createNewClient();
         }
 
         System.out.print("Enter the project name: ");
@@ -84,7 +82,7 @@ public class Menu {
     }
 
 
-    private Client createNewClient(Scanner scanner) {
+    private Client createNewClient() {
         int id = 1;
         System.out.print("Enter the client name: ");
         String name = scanner.nextLine();
