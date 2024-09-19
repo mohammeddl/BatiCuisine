@@ -9,17 +9,13 @@ import java.util.List;
 public class Project {
     private int id;
     private String projectName;
-    private double totalCost;
-    private String projectStatus;
     private Client client;
     private Quote quote;
     private List<Component> components;
 
-    public Project(int id, String projectName, double totalCost, String projectStatus, Client client) {
+    public Project(int id, String projectName, Client client) {
         this.id = id;
         this.projectName = projectName;
-        this.totalCost = totalCost;
-        this.projectStatus = projectStatus;
         this.client = client;
         this.components = new ArrayList<>();
     }
@@ -45,22 +41,6 @@ public class Project {
 
     public void setProjectName(String projectName) {
         this.projectName = projectName;
-    }
-
-    public double getTotalCost() {
-        return totalCost;
-    }
-
-    public void setTotalCost(double totalCost) {
-        this.totalCost = totalCost;
-    }
-
-    public String getProjectStatus() {
-        return projectStatus;
-    }
-
-    public void setProjectStatus(String projectStatus) {
-        this.projectStatus = projectStatus;
     }
 
     public Client getClient() {

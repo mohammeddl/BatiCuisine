@@ -3,29 +3,29 @@ package main.java.com.baticuisine.service;
 import java.util.List;
 
 import main.java.com.baticuisine.model.Project;
-import main.java.com.baticuisine.repository.ProjectRepository;
+import main.java.com.baticuisine.repository.ProjectRepositoryImplt;
 
 public class ProjectService {
     
-    private final ProjectRepository projectRepository;
+    private final ProjectRepositoryImplt projectRepositoryImplt;
 
-    public ProjectService(ProjectRepository projectRepository) {
-        this.projectRepository = projectRepository;
+    public ProjectService(ProjectRepositoryImplt projectRepositoryImplt) {
+        this.projectRepositoryImplt = projectRepositoryImplt;
     }
 
     public void addProject(Project project) {
-        projectRepository.addProject(project);
+        projectRepositoryImplt.addProject(project);
     }
 
     public void displayProjects() {
-        List<Project> projects = projectRepository.getAllProjects();
+        List<Project> projects = projectRepositoryImplt.getAllProjects();
         for (Project project : projects) {
             System.out.println("Project: " + project.getProjectName() + ", Client: " + project.getClient().getName());
         }
     }
 
     public void calculateProjectCost(String projectName) {
-        Project project = projectRepository.getProjectByName(projectName);
+        Project project = projectRepositoryImplt.getProjectByName(projectName);
         if (project != null) {
             double totalCost = project.calculateTotalCost();
             System.out.println("Total cost of project " + projectName + ": " + totalCost);
