@@ -1,6 +1,6 @@
 package main.java.com.baticuisine.repository;
 
-import main.java.com.baticuisine.dao.ProjectDao;
+import main.java.com.baticuisine.dao.ProjectDaoImplt;
 import main.java.com.baticuisine.model.Project;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,15 +8,15 @@ import java.util.List;
 public class ProjectRepositoryImplt implements ProjectRepository {
     private final List<Project> projects = new ArrayList<>();
 
-    private final ProjectDao projectDao;
+    private final ProjectDaoImplt projectDaoImplt;
 
-    public ProjectRepositoryImplt(ProjectDao projectDao) {
-        this.projectDao = projectDao;
+    public ProjectRepositoryImplt(ProjectDaoImplt projectDaoImplt) {
+        this.projectDaoImplt = projectDaoImplt;
     }
 
 
     public void addProject(Project project) {
-        projects.add(project);
+        projectDaoImplt.addProject(project);
     }
 
     public Project getProjectByName(String name) {

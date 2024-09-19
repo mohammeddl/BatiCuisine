@@ -11,16 +11,18 @@ public class Project {
     private String projectName;
     private double totalCost;
     private String projectStatus;
+    private int margeBeneficium;
     private Client client;
     private Quote quote;
     private List<Component> components;
 
-    public Project(int id, String projectName, double totalCost, String projectStatus, Client client) {
+    public Project(int id, String projectName, double totalCost, String projectStatus, Client client, int margeBeneficium) {
         this.id = id;
         this.projectName = projectName;
         this.totalCost = totalCost;
         this.projectStatus = projectStatus;
         this.client = client;
+        this.margeBeneficium = margeBeneficium;
         this.components = new ArrayList<>();
     }
 
@@ -69,6 +71,14 @@ public class Project {
 
     public void setClient(Client client) {
         this.client = client;
+    }
+
+    public void setMargeBeneficium(int margeBeneficium) {
+        this.margeBeneficium = margeBeneficium;
+    }
+
+    public int getMargeBeneficium() {
+        return margeBeneficium;
     }
 
     public List<Component> getComponents() {

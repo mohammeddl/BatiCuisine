@@ -75,12 +75,13 @@ public class Menu {
 
         System.out.print("Enter the project name: ");
         String projectName = scanner.nextLine();
+        System.out.println("Entrez la surface de la cuisine (en m²) :");
 
-        Project project = new Project(projectName, client);
-        projectService.addProject(project);
+        // Project project = new Project(projectName, client);
+        // projectService.addProject(project);
         System.out.println("Project created successfully!");
+        
     }
-
 
     private Client createNewClient() {
         int id = 1;
