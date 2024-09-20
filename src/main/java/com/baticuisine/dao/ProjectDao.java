@@ -6,6 +6,6 @@ public interface ProjectDao {
 
     public void addProject(Project project);
     Project getProjectByName(String name);
-
+    public void addTotalCost(Project project);
     
 }
