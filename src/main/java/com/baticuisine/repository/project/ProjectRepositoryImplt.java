@@ -1,4 +1,4 @@
-package main.java.com.baticuisine.repository;
+package main.java.com.baticuisine.repository.project;
 
 import main.java.com.baticuisine.dao.ProjectDaoImplt;
 import main.java.com.baticuisine.model.Project;
@@ -20,10 +20,7 @@ public class ProjectRepositoryImplt implements ProjectRepository {
     }
 
     public Project getProjectByName(String name) {
-        return projects.stream()
-                .filter(project -> project.getProjectName().equalsIgnoreCase(name))
-                .findFirst()
-                .orElse(null);
+        return projectDaoImplt.getProjectByName(name);
     }
 
 

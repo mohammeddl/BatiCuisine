@@ -4,10 +4,13 @@ public abstract class Component {
     
     private int id;
     private String name;
+    private String typeComposant;
+    private int projectId;
 
-    public Component(int id, String name) {
-        this.id = id;
+    public Component( String name, String typeComposant, int projectId) {
         this.name = name;
+        this.typeComposant = typeComposant;
+        this.projectId = projectId;
     }
 
     // Getters and Setters
@@ -26,6 +29,24 @@ public abstract class Component {
     public void setName(String name) {
         this.name = name;
     }
+
+    public String getTypeComposant() {
+        return typeComposant;
+    }
+
+    public void setTypeComposant(String typeComposant) {
+        this.typeComposant = typeComposant;
+    }
+
+    public int getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(int projectId) {
+        this.projectId = projectId;
+    }
+
+    
 
 
     // Abstract method to calculate the cost of a component
