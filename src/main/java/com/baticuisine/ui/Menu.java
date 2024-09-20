@@ -2,18 +2,29 @@ package main.java.com.baticuisine.ui;
 import java.util.Scanner;
 
 import main.java.com.baticuisine.model.Client;
+import main.java.com.baticuisine.model.Component;
+import main.java.com.baticuisine.model.Labor;
+import main.java.com.baticuisine.model.Material;
 import main.java.com.baticuisine.model.Project;
 import main.java.com.baticuisine.service.ClientServiceImplt;
+import main.java.com.baticuisine.service.MaterialServiceImplt;
 import main.java.com.baticuisine.service.ProjectService;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Menu {
 
     private final ProjectService projectService;
     private final ClientServiceImplt clientService;
+    private final MaterialServiceImplt materialServiceImplt;
 
-    public Menu(ProjectService projectService, ClientServiceImplt clientService) {
+
+    public Menu(ProjectService projectService, ClientServiceImplt clientService, MaterialServiceImplt materialServiceImplt) {
         this.projectService = projectService;
         this.clientService = clientService;
+        this.materialServiceImplt = materialServiceImplt;
+
     }
 
 
@@ -62,8 +73,8 @@ public class Menu {
         System.out.println("1. Search for an existing client");
         System.out.println("2. Add a new client");
         int clientChoice = scanner.nextInt();
-        scanner.nextLine();
-
+        scanner.nextLine(); // Consume the leftover newline
+    
         Client client;
         if (clientChoice == 1) {
             System.out.print("Enter the client's name: ");
@@ -72,16 +83,89 @@ public class Menu {
         } else {
             client = createNewClient();
         }
-
+    
         System.out.print("Enter the project name: ");
-        String projectName = scanner.nextLine();
-        System.out.println("Entrez la surface de la cuisine (en m²) :");
-
-        // Project project = new Project(projectName, client);
-        // projectService.addProject(project);
+        String projectName = scanner.nextLine(); // Corrected input to read the project name
+    
+        System.out.println("Enter total cost of the project: ");
+        int totalCost = scanner.nextInt();
+        scanner.nextLine(); // Consume the leftover newline
+    
+        System.out.println("Enter margin benefit: ");
+        int marginBenefit = scanner.nextInt();
+        scanner.nextLine(); // Consume the leftover newline
+    
+        System.out.println("Enter project status: ");
+        String projectStatus = scanner.nextLine();
+    
+        Project project = new Project(projectName, totalCost, client, marginBenefit, projectStatus);
+        projectService.addProject(project);
         System.out.println("Project created successfully!");
-        
+    
+        List<Component> components = new ArrayList<>();
+        boolean addingComponents = true;
+    
+        while (addingComponents) {
+            System.out.println("--- Adding components ---");
+            System.out.println("Enter type of component (material/labor): ");
+            String typeComponent = scanner.nextLine();
+    
+            if (typeComponent.equalsIgnoreCase("material")) {
+                components.add(addMaterial(project, typeComponent));
+            } else if (typeComponent.equalsIgnoreCase("labor")) {
+                components.add(addLabor(project, typeComponent));
+            } else {
+                System.out.println("Invalid component type, please try again.");
+                continue;
+            }
+    
+            System.out.println("Do you want to add another component? (yes/no): ");
+            addingComponents = scanner.nextLine().equalsIgnoreCase("yes");
+        }
+    
+        // Example: Add the components to the project here
+        // project.setComponents(components);
+        // projectService.updateProject(project);
+    
+        System.out.println("Components added successfully!");
     }
+    
+private Material addMaterial(Project project, String typeComponent) {
+    System.out.println("--- Adding Material ---");
+    System.out.print("Enter the name of the material: ");
+    String materialName = scanner.nextLine();
+    System.out.print("Enter the quantity of the material: ");
+    int quantity = scanner.nextInt();
+    System.out.print("Enter the tax rate of the material: ");
+    int taxRate = scanner.nextInt();
+    System.out.print("Enter the transport cost of the material: ");
+    int transportCost = scanner.nextInt();
+    scanner.nextLine();
+    
+    Project projectId = projectService.getProjectByName(project.getProjectName());
+    Material material = new Material(materialName, quantity, taxRate, transportCost, typeComponent, projectId.getId());
+    materialServiceImplt.addMaterial(material);
+    System.out.println("Material added successfully!");
+    return material;
+}
+
+private Labor addLabor(Project project, String typeComponent) {
+    System.out.println("--- Adding Labor ---");
+    System.out.print("Enter the name of the labor: ");
+    String laborName = scanner.nextLine();
+    System.out.print("Enter the hourly rate: ");
+    int hourlyRate = scanner.nextInt();
+    System.out.print("Enter the number of hours: ");
+    int hours = scanner.nextInt();
+    scanner.nextLine(); 
+
+    Project projectId = projectService.getProjectByName(project.getProjectName());
+    Labor labor = new Labor(laborName, hourlyRate, hours, typeComponent, projectId.getId());
+    
+    System.out.println("Labor added successfully!");
+    return labor;
+}
+
 
     private Client createNewClient() {
         int id = 1;

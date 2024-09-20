@@ -4,8 +4,8 @@ public class Labor extends Component {
     private int hourlyRate;
     private int hoursWorked;
 
-    public Labor(int id, String name, int hourlyRate, int hoursWorked) {
-        super(id, name);
+    public Labor( String name, int hourlyRate, int hoursWorked, String typeComposant, int projectId) {
+        super(name, typeComposant, projectId);
         this.hourlyRate = hourlyRate;
         this.hoursWorked = hoursWorked;
     }

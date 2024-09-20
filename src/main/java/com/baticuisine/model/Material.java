@@ -5,8 +5,8 @@ public class Material extends Component {
     private int transportCost;
     private int quantity;
 
-    public Material(int id, String name, int quantity, int taxRate, int transportCost) {
-        super(id, name);
+    public Material(String name, int quantity, int taxRate, int transportCost, String typeComposant, int projectId) {
+        super(name, typeComposant, projectId);
         this.taxRate = taxRate;
         this.transportCost = transportCost;
         this.quantity = quantity;

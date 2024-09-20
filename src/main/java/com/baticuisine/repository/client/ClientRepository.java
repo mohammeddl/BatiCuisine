@@ -1,4 +1,4 @@
-package main.java.com.baticuisine.repository;
+package main.java.com.baticuisine.repository.client;
 
 import java.util.List;
 

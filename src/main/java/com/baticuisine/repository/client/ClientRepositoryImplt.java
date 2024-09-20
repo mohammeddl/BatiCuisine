@@ -1,4 +1,4 @@
-package main.java.com.baticuisine.repository;
+package main.java.com.baticuisine.repository.client;
 
 import main.java.com.baticuisine.dao.ClientDaoImplt;
 import main.java.com.baticuisine.model.Client;

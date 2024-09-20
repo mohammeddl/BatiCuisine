@@ -3,7 +3,7 @@ package main.java.com.baticuisine.service;
 import java.util.List;
 
 import main.java.com.baticuisine.model.Project;
-import main.java.com.baticuisine.repository.ProjectRepositoryImplt;
+import main.java.com.baticuisine.repository.project.ProjectRepositoryImplt;
 
 public class ProjectService {
     
@@ -16,6 +16,10 @@ public class ProjectService {
     public void addProject(Project project) {
         projectRepositoryImplt.addProject(project);
         System.out.println("Project created successfully!");
+    }
+
+    public Project getProjectByName(String name) {
+        return projectRepositoryImplt.getProjectByName(name);
     }
 
     public void displayProjects() {
