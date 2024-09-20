@@ -113,19 +113,14 @@ public class Menu {
         double totalCost = calculateTotalCost();
         System.out.println("Total Cost: " + totalCost);
 
-        // Enter and calculate the benefit margin
         System.out.print("Enter the benefit margin percentage: ");
         double marginBenefit = scanner.nextDouble();
         double benefitAmount = totalCost * (marginBenefit / 100);
 
-        // Update project object with total cost and benefit margin
         project.setTotalCost(totalCost);
         project.setMargeBeneficium(benefitAmount);
 
-        // Update project total cost and benefit margin in the database
         projectService.calculateProjectBenefit(project);
-
-        // Clear materials and labors list after project creation
         materials.clear();
         labors.clear();
 
@@ -144,7 +139,6 @@ public class Menu {
         int transportCost = scanner.nextInt();
         scanner.nextLine();
 
-        // Create and store the material in the temporary list
         Project projectId = projectService.getProjectByName(project.getProjectName());
         Material material = new Material(materialName, quantity, taxRate, transportCost, "Material", projectId.getId());
         materials.add(material);
@@ -194,7 +188,7 @@ public class Menu {
 
         System.out.print("Is the client a professional? (true/false): ");
         boolean isProfessional = scanner.nextBoolean();
-        scanner.nextLine(); // consume newline left-over
+        scanner.nextLine(); 
 
         Client client = new Client(id++, name, address, phone, isProfessional);
         clientService.addClient(client);
