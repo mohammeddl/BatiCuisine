@@ -23,10 +23,7 @@ public class ProjectService {
     }
 
     public void displayProjects() {
-        List<Project> projects = projectRepositoryImplt.getAllProjects();
-        for (Project project : projects) {
-            System.out.println("Project: " + project.getProjectName() + ", Client: " + project.getClient().getName());
-        }
+       projectRepositoryImplt.getAllProjects();
     }
 
     public void calculateProjectCost(String projectName) {

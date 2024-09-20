@@ -29,7 +29,6 @@ public class Project {
         this.labors = new ArrayList<>(); 
     }
 
-    // Constructor with projectName and Client
     public Project(String projectName, Client client) {
         this.projectName = projectName;
         this.client = client;
