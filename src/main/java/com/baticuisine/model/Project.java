@@ -3,21 +3,21 @@ package main.java.com.baticuisine.model;
 import java.util.ArrayList;
 import java.util.List;
 
-
-
-
 public class Project {
     private int id;
     private String projectName;
-    private int totalCost;
+    private double totalCost;
     private String projectStatus;
-    private int margeBeneficium;
-    private int clientId;
+    private double margeBeneficium;
+    private int clientId; 
     private Client client;
-    private Quote quote;
+    private Quote quote; 
     private List<Component> components;
+    private List<Material> materials; 
+    private List<Labor> labors; 
 
-    public Project(int id, String projectName, int totalCost, String projectStatus, int clientId, int margeBeneficium) {
+
+    public Project(int id, String projectName, double totalCost, String projectStatus, int clientId, double margeBeneficium) {
         this.id = id;
         this.projectName = projectName;
         this.totalCost = totalCost;
@@ -25,15 +25,26 @@ public class Project {
         this.clientId = clientId;
         this.margeBeneficium = margeBeneficium;
         this.components = new ArrayList<>();
+        this.materials = new ArrayList<>(); 
+        this.labors = new ArrayList<>(); 
     }
 
-    public Project(String projectName, int totalCost, Client client, int margeBeneficium, String projectStatus) {
+    // Constructor with projectName and Client
+    public Project(String projectName, Client client) {
         this.projectName = projectName;
         this.client = client;
+        this.components = new ArrayList<>();
+        this.materials = new ArrayList<>(); 
+        this.labors = new ArrayList<>(); 
+    }
+
+    public Project(String projectName, int clientId , int id) {
+        this.projectName = projectName;
+        this.clientId = clientId;
+        this.id = id;
     }
 
     // Getters and Setters
-    
     public int getId() {
         return id;
     }
@@ -54,7 +65,7 @@ public class Project {
         return totalCost;
     }
 
-    public void setTotalCost(int totalCost) {
+    public void setTotalCost(double totalCost) {
         this.totalCost = totalCost;
     }
 
@@ -66,6 +77,22 @@ public class Project {
         this.projectStatus = projectStatus;
     }
 
+    public double getMargeBeneficium() {
+        return margeBeneficium;
+    }
+
+    public void setMargeBeneficium(double margeBeneficium) {
+        this.margeBeneficium = margeBeneficium;
+    }
+
+    public int getClientId() {
+        return clientId;
+    }
+
+    public void setClientId(int clientId) {
+        this.clientId = clientId;
+    }
+
     public Client getClient() {
         return client;
     }
@@ -74,20 +101,34 @@ public class Project {
         this.client = client;
     }
 
-    public void setClientId(int clientId) {
-        this.clientId = clientId;
+    public List<Material> getMaterials() {
+        return materials;
     }
 
-    public int getClientId() {
-        return clientId;
+    public void addMaterial(Material material) {
+        materials.add(material);
     }
 
-    public void setMargeBeneficium(int margeBeneficium) {
-        this.margeBeneficium = margeBeneficium;
+    public List<Labor> getLabors() {
+        return labors;
     }
 
-    public int getMargeBeneficium() {
-        return margeBeneficium;
+    public void addLabor(Labor labor) {
+        labors.add(labor);
+    }
+
+    // Method to calculate the total cost based on materials and labor
+    public double calculateTotalCost() {
+        double totalMaterialCost = materials.stream()
+                                            .mapToDouble(Material::calculateCost)
+                                            .sum();
+
+        double totalLaborCost = labors.stream()
+                                    .mapToDouble(Labor::calculateCost)
+                                    .sum();
+
+        totalCost = totalMaterialCost + totalLaborCost;
+        return totalCost;
     }
 
     public List<Component> getComponents() {
@@ -97,14 +138,4 @@ public class Project {
     public void addComponent(Component component) {
         components.add(component);
     }
-
-
-    public double calculateTotalCost() {
-        double totalCost = 0;
-        for (Component component : components) {
-            totalCost += component.calculateCost();
-        }
-        return totalCost;
-    }
-
 }

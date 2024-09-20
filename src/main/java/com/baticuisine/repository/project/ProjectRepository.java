@@ -7,5 +7,6 @@ public interface ProjectRepository {
     void addProject(Project project);
     Project getProjectByName(String name);
     List<Project> getAllProjects();
+    void addTotalAndbinifit(Project project);
 
 }
