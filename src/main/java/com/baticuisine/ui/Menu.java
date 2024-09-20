@@ -51,7 +51,7 @@ public class Menu {
                     createNewProject();
                     break;
                 case 2:
-                    System.out.println("Showing existing projects...");
+                    dispalyProjects();
                     break;
                 case 3:
                     System.out.println("Calculating project cost...");
@@ -195,5 +195,8 @@ public class Menu {
         return client;
     }
 
-
+   public void  dispalyProjects() {
+        System.out.println("Displaying projects...");
+        projectService.displayProjects();
+    }
 }

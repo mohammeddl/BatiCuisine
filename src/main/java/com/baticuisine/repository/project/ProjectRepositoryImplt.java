@@ -25,7 +25,7 @@ public class ProjectRepositoryImplt implements ProjectRepository {
 
 
     public List<Project> getAllProjects() {
-        return new ArrayList<>(projects);
+        return projectDaoImplt.getAllProjects();
     }
 
     public void addTotalAndbinifit(Project project) {
