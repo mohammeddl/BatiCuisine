@@ -38,4 +38,8 @@ public class ProjectService {
             System.out.println("Project not found!");
         }
     }
+
+    public void calculateProjectBenefit(Project project) {
+        projectRepositoryImplt.addTotalAndbinifit(project);
+    }
 }

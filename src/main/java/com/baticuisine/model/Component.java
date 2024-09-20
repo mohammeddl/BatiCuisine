@@ -46,9 +46,8 @@ public abstract class Component {
         this.projectId = projectId;
     }
 
-    
-
-
-    // Abstract method to calculate the cost of a component
     public abstract double calculateCost();
+
+
+
 }
