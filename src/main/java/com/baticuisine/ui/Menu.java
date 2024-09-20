@@ -20,7 +20,7 @@ public class Menu {
     private final MaterialServiceImplt materialServiceImplt;
     private final LaborServiceImplt laborServiceImplt;
 
-    // Temporary lists to hold materials and labor for the current project
+
     private List<Material> materials = new ArrayList<>();
     private List<Labor> labors = new ArrayList<>();
 
@@ -109,7 +109,7 @@ public class Menu {
             addingComponents = scanner.nextLine().equalsIgnoreCase("yes");
         }
 
-        // Calculate total cost of materials and labor
+
         double totalCost = calculateTotalCost();
         System.out.println("Total Cost: " + totalCost);
 
@@ -156,7 +156,7 @@ public class Menu {
         int hours = scanner.nextInt();
         scanner.nextLine();
 
-        // Create and store the labor in the temporary list
+
         Project projectId = projectService.getProjectByName(project.getProjectName());
         Labor labor = new Labor(laborName, hourlyRate, hours, "Labor", projectId.getId());
         labors.add(labor);
