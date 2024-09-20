@@ -1,4 +1,4 @@
-package main.java.com.baticuisine.service;
+package main.java.com.baticuisine.service.client;
 
 import main.java.com.baticuisine.model.Client;
 import main.java.com.baticuisine.repository.client.ClientRepository;

@@ -1,4 +1,4 @@
-package main.java.com.baticuisine.service;
+package main.java.com.baticuisine.service.material;
 
 import main.java.com.baticuisine.model.Material;
 import main.java.com.baticuisine.repository.material.MaterialRepositoryImplt;
