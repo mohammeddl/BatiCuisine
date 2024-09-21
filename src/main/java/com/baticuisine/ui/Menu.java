@@ -84,6 +84,10 @@ public class Menu {
             System.out.print("Enter the client's name: ");
             String clientName = scanner.nextLine();
             client = clientService.getClientByName(clientName);
+            if(client == null) {
+                System.out.println("Client not found. Please add a new client.");
+                client = createNewClient();
+            }
         } else {
             client = createNewClient();
         }
