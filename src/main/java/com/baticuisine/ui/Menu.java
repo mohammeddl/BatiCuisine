@@ -59,7 +59,7 @@ public class Menu {
                     dispalyProjects();
                     break;
                 case 3:
-                    
+                    calculateProjectCost();
                     break;
                 case 4:
                     System.out.println("Quitting...");
@@ -237,8 +237,6 @@ public class Menu {
         } else {
             System.out.println("Quote not accepted.");
         }
-    
-        // Save or update quote acceptance state in database
         quoteServiceImplt.updateQuote(quote);
     }
 
@@ -246,5 +244,31 @@ public class Menu {
     public void  dispalyProjects() {
         System.out.println("Displaying projects...");
         projectService.displayProjects();
+    }
+
+
+    //Calculate project cost
+    public void calculateProjectCost() {
+        Date issueDate = new Date(); 
+        Date validityDate = new Date(issueDate.getTime() + (7 * 24 * 60 * 60 * 1000)); 
+        dispalyProjects();
+        System.out.println("Enter the project name: ");
+        String projectName = scanner.nextLine();
+        Project projectId = projectService.getProjectByName(projectName);
+        Quote quote = new Quote(projectId.getTotalCost(), issueDate, validityDate, false, projectId.getId()); 
+        System.out.println("Quote generated successfully!");
+        System.out.println(quote);
+        quoteServiceImplt.addQuote(quote); 
+
+        System.out.println("Do you want to accept this quote? (yes/no)");
+        String acceptQuoteChoice = scanner.nextLine();
+    
+        if (acceptQuoteChoice.equalsIgnoreCase("yes")) {
+            quote.setAccepted(true);
+            System.out.println("Quote accepted!");
+        } else {
+            System.out.println("Quote not accepted.");
+        }
+        quoteServiceImplt.updateQuote(quote);
     }
 }

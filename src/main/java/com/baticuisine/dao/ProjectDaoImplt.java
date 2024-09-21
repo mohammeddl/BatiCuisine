@@ -14,7 +14,16 @@ public class ProjectDaoImplt implements ProjectDao {
     private static final String INSERT_PROJECT = "INSERT INTO Project (projectname, client_id) VALUES (?, ?)";
     private static final String GET_PROJECT_BY_NAME = "SELECT * FROM Project WHERE projectname = ?";
     private static final String UPDATE_TOTAL_MARGEBINIF = "UPDATE Project SET totalcost = ?, marginbeneficium = ? WHERE projectname = ?";
-    private static final String GET_ALL_PROJECTS = "SELECT project.projectname, client.name from project inner join client on project.client_id = client.id";
+    private static final String GET_ALL_PROJECTS = 
+    "SELECT client.name AS client_name, " +
+    "project.projectname AS project_name, " +
+    "project.totalcost AS total_cost, " +
+    "component.name AS component_name, " +
+    "component.componenttype AS component_type " +
+    "FROM project " +
+    "JOIN client ON project.client_id = client.id " +
+    "JOIN component ON project.id = component.project_id";
+
 
     private final Connection connection;
 
@@ -23,7 +32,7 @@ public class ProjectDaoImplt implements ProjectDao {
     }
 
     
-    @Override
+
     public void addProject(Project project) {
         try{
             PreparedStatement preparedStatement = connection.prepareStatement(INSERT_PROJECT);
@@ -42,7 +51,7 @@ public class ProjectDaoImplt implements ProjectDao {
             preparedStatement.setString(1, name);
             ResultSet resultSet = preparedStatement.executeQuery();
             if(resultSet.next()){
-                return new Project(resultSet.getString("projectname"), resultSet.getInt("client_id"), resultSet.getInt("id"));
+                return new Project(resultSet.getString("projectname"), resultSet.getInt("client_id"), resultSet.getInt("id"), resultSet.getDouble("totalcost"));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -68,7 +77,15 @@ public class ProjectDaoImplt implements ProjectDao {
             PreparedStatement preparedStatement = connection.prepareStatement(GET_ALL_PROJECTS);
             ResultSet resultSet = preparedStatement.executeQuery();
             while(resultSet.next()){
-                System.out.println("Project: " + resultSet.getString("projectname") + ", Client: " + resultSet.getString("name"));
+                String projectInfo = String.format(
+                    "Client name: %s | Project name: %s | Total cost: %.2f | Component name: %s | Component type: %s",
+                    resultSet.getString("client_name"),
+                    resultSet.getString("project_name"),
+                    resultSet.getDouble("total_cost"),
+                    resultSet.getString("component_name"),
+                    resultSet.getString("component_type")
+                );
+                System.out.println(projectInfo);
             }
         } catch (Exception e) {
             e.printStackTrace();

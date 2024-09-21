@@ -37,10 +37,11 @@ public class Project {
         this.labors = new ArrayList<>(); 
     }
 
-    public Project(String projectName, int clientId , int id) {
+    public Project(String projectName, int clientId , int id, double totalCost) {
         this.projectName = projectName;
         this.clientId = clientId;
         this.id = id;
+        this.totalCost = totalCost;
     }
 
     // Getters and Setters
