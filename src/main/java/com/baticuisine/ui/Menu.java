@@ -192,7 +192,6 @@ public class Menu {
 
     //creating new client
     private Client createNewClient() {
-        int id = 1;
         System.out.print("Enter the client name: ");
         String name = scanner.nextLine();
 
@@ -206,15 +205,26 @@ public class Menu {
         boolean isProfessional = scanner.nextBoolean();
         scanner.nextLine(); 
 
-        Client client = new Client(id++, name, address, phone, isProfessional);
-        clientService.addClient(client);
+        Client clientNew = new Client(name, address, phone, isProfessional);
+        clientService.addClient(clientNew);
+        Client client = clientService.getClientByName(name);
+
         return client;
     }
     
 
     //generate quote project 
     private void generateQuote(Project project, double totalCost) {
-        // Create a new quote
+        Client client = project.getClient();
+        double discountPercentage = getDiscountPercentage(client);
+        double discountAmount = totalCost * (discountPercentage / 100);
+        double discountedCost = totalCost - discountAmount;
+
+        System.out.println("Generating quote for project: " + project.getProjectName());
+        System.out.println("Original Total Cost: " + totalCost);
+        System.out.println("Discount Percentage: " + discountPercentage + "%");
+        System.out.println("Discounted Total Cost: " + discountedCost);
+        
         System.out.println("Generating quote for project: " + project.getProjectName());
     
         Date issueDate = new Date(); // Current date
@@ -222,7 +232,7 @@ public class Menu {
     
         // Create a Quote object
         Project projectId = projectService.getProjectByName(project.getProjectName());
-        Quote quote = new Quote(totalCost, issueDate, validityDate, false, projectId.getId()); 
+        Quote quote = new Quote(discountedCost, issueDate, validityDate, false, projectId.getId()); 
         quoteServiceImplt.addQuote(quote); 
     
         System.out.println("Quote generated successfully!");
@@ -270,5 +280,12 @@ public class Menu {
             System.out.println("Quote not accepted.");
         }
         quoteServiceImplt.updateQuote(quote);
+    }
+
+    private double getDiscountPercentage(Client client) {
+        if (client.isProfessional()) { 
+            return 10.0; 
+        }
+        return 0.0; 
     }
 }
