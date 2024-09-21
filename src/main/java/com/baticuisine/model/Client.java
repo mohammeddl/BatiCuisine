@@ -7,6 +7,12 @@ public class Client {
     private String phone;
     private boolean isProfessional;
 
+    public Client( String name, String address, String phone, boolean isProfessional) {
+        this.name = name;
+        this.address = address;
+        this.phone = phone;
+        this.isProfessional = isProfessional;
+    }
     public Client(int id, String name, String address, String phone, boolean isProfessional) {
         this.id = id;
         this.name = name;
@@ -14,6 +20,7 @@ public class Client {
         this.phone = phone;
         this.isProfessional = isProfessional;
     }
+
 
     // Getters and Setters
     public int getId() {
