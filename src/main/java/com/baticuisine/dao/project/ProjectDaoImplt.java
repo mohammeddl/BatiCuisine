@@ -14,6 +14,7 @@ public class ProjectDaoImplt implements ProjectDao {
 
     private static final String INSERT_PROJECT = "INSERT INTO Project (projectname, client_id) VALUES (?, ?)";
     private static final String GET_PROJECT_BY_NAME = "SELECT * FROM Project WHERE projectname = ?";
+    private static final String UPDATE_PROJECT_STATUS = "UPDATE project SET projectstatus = ? WHERE projectname = ?";
     private static final String UPDATE_TOTAL_MARGEBINIF = "UPDATE Project SET totalcost = ?, marginbeneficium = ? WHERE projectname = ?";
     private static final String GET_ALL_PROJECTS = 
     "SELECT client.name AS client_name, " +
@@ -94,4 +95,17 @@ public class ProjectDaoImplt implements ProjectDao {
         }
         return null;
     }
+
+
+    public void updateProject(Project project) {
+        try{
+            PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_PROJECT_STATUS);
+            preparedStatement.setString(1, project.getProjectStatus());
+            preparedStatement.setString(2, project.getProjectName());
+            preparedStatement.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }

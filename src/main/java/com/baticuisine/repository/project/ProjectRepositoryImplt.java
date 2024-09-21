@@ -32,4 +32,8 @@ public class ProjectRepositoryImplt implements ProjectRepository {
     public void addTotalAndbinifit(Project project) {
         projectDaoImplt.addTotalCost(project);
     }
+
+    public void updateProject(Project project) {
+        projectDaoImplt.updateProject(project);
+    }
 }
