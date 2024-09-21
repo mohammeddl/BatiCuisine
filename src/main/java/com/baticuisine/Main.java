@@ -1,10 +1,10 @@
 package main.java.com.baticuisine;
 
-import main.java.com.baticuisine.dao.ClientDaoImplt;
-import main.java.com.baticuisine.dao.LaborDaoImplt;
-import main.java.com.baticuisine.dao.MaterialDaoImplt;
-import main.java.com.baticuisine.dao.ProjectDaoImplt;
-import main.java.com.baticuisine.dao.QuoteDaoImplt;
+import main.java.com.baticuisine.dao.client.ClientDaoImplt;
+import main.java.com.baticuisine.dao.component.LaborDaoImplt;
+import main.java.com.baticuisine.dao.component.MaterialDaoImplt;
+import main.java.com.baticuisine.dao.project.ProjectDaoImplt;
+import main.java.com.baticuisine.dao.quote.QuoteDaoImplt;
 import main.java.com.baticuisine.model.Labor;
 import main.java.com.baticuisine.service.client.ClientServiceImplt;
 import main.java.com.baticuisine.service.labor.LaborServiceImplt;

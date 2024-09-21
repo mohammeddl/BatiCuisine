@@ -1,4 +1,4 @@
-package main.java.com.baticuisine.dao;
+package main.java.com.baticuisine.dao.project;
 
 import java.sql.Connection;
 

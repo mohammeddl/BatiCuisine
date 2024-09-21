@@ -1,6 +1,6 @@
 package main.java.com.baticuisine.repository.quote;
 
-import main.java.com.baticuisine.dao.QuoteDaoImplt;
+import main.java.com.baticuisine.dao.quote.QuoteDaoImplt;
 import main.java.com.baticuisine.model.Quote;
 
 public class QuoteRepositoryImplt implements QuoteRepository {

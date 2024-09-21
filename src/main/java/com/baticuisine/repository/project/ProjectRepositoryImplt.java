@@ -1,6 +1,6 @@
 package main.java.com.baticuisine.repository.project;
 
-import main.java.com.baticuisine.dao.ProjectDaoImplt;
+import main.java.com.baticuisine.dao.project.ProjectDaoImplt;
 import main.java.com.baticuisine.model.Project;
 import java.util.ArrayList;
 import java.util.List;
