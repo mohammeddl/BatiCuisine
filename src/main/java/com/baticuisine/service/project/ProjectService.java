@@ -14,23 +14,24 @@ public class ProjectService {
         this.projectRepositoryImplt = projectRepositoryImplt;
     }
 
-    // Adds a new project to the repository
+
     public void addProject(Project project) {
         projectRepositoryImplt.addProject(project);
         System.out.println("Project created successfully!");
     }
 
-    // Retrieves a project by its name using Optional
     public Optional<Project> getProjectByName(String name) {
         return projectRepositoryImplt.getProjectByName(name);
     }
 
-    // Displays all projects
     public void displayProjects() {
-       projectRepositoryImplt.getAllProjects(); // Consider returning the list of projects for further use
+       projectRepositoryImplt.getAllProjects(); 
     }
 
-    // Calculates and displays the total cost of a project by its name
+    public void updateProject(Project project) {
+        projectRepositoryImplt.updateProject(project);
+    }
+
     public void calculateProjectCost(String projectName) {
         // Using ifPresentOrElse to handle both cases (project found or not)
         projectRepositoryImplt.getProjectByName(projectName).ifPresentOrElse(
@@ -42,8 +43,9 @@ public class ProjectService {
         );
     }
 
-    // Calculates the total cost and benefit of a project and saves it
     public void calculateProjectBenefit(Project project) {
         projectRepositoryImplt.addTotalAndbinifit(project);
     }
+
+
 }

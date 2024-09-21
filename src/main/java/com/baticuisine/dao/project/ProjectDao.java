@@ -1,4 +1,4 @@
-package main.java.com.baticuisine.dao;
+package main.java.com.baticuisine.dao.project;
 
 
 import java.util.List;
@@ -12,5 +12,6 @@ public interface ProjectDao {
     Optional<Project> getProjectByName(String name);
     public void addTotalCost(Project project);
     List<Project> getAllProjects();
+    public void updateProject(Project project);
     
 }

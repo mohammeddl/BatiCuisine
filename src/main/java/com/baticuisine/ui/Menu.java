@@ -247,10 +247,13 @@ public class Menu {
     
         if (acceptQuoteChoice.equalsIgnoreCase("yes")) {
             quote.setAccepted(true);
+            projectId.setProjectStatus("terminated");
             System.out.println("Quote accepted!");
         } else {
+            projectId.setProjectStatus("anulled");
             System.out.println("Quote not accepted.");
         }
+        projectService.updateProject(projectId);
         quoteServiceImplt.updateQuote(quote);
     }
 

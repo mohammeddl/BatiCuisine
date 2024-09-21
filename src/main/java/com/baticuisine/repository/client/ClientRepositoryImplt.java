@@ -1,6 +1,6 @@
 package main.java.com.baticuisine.repository.client;
 
-import main.java.com.baticuisine.dao.ClientDaoImplt;
+import main.java.com.baticuisine.dao.client.ClientDaoImplt;
 import main.java.com.baticuisine.model.Client;
 import java.util.ArrayList;
 import java.util.List;

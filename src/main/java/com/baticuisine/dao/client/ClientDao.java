@@ -1,4 +1,4 @@
-package main.java.com.baticuisine.dao;
+package main.java.com.baticuisine.dao.client;
 
 import main.java.com.baticuisine.model.Client;
 
