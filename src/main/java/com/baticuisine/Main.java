@@ -4,15 +4,18 @@ import main.java.com.baticuisine.dao.ClientDaoImplt;
 import main.java.com.baticuisine.dao.LaborDaoImplt;
 import main.java.com.baticuisine.dao.MaterialDaoImplt;
 import main.java.com.baticuisine.dao.ProjectDaoImplt;
+import main.java.com.baticuisine.dao.QuoteDaoImplt;
 import main.java.com.baticuisine.model.Labor;
 import main.java.com.baticuisine.service.client.ClientServiceImplt;
 import main.java.com.baticuisine.service.labor.LaborServiceImplt;
 import main.java.com.baticuisine.service.material.MaterialServiceImplt;
 import main.java.com.baticuisine.service.project.ProjectService;
+import main.java.com.baticuisine.service.quote.QuoteServiceImplt;
 import main.java.com.baticuisine.repository.client.ClientRepositoryImplt;
 import main.java.com.baticuisine.repository.labor.LaborRepositoryImplt;
 import main.java.com.baticuisine.repository.material.MaterialRepositoryImplt;
 import main.java.com.baticuisine.repository.project.ProjectRepositoryImplt;
+import main.java.com.baticuisine.repository.quote.QuoteRepositoryImplt;
 import main.java.com.baticuisine.ui.Menu;
 
 public class Main {
@@ -34,9 +37,13 @@ public class Main {
         LaborRepositoryImplt laborRepositoryImplt = new LaborRepositoryImplt(laborDaoImplt);
         LaborServiceImplt laborServiceImplt = new LaborServiceImplt(laborRepositoryImplt);
 
+        QuoteDaoImplt quoteDaoImplt = new QuoteDaoImplt();
+        QuoteRepositoryImplt quoteRepositoryImplt = new QuoteRepositoryImplt(quoteDaoImplt);
+        QuoteServiceImplt quoteServiceImplt = new QuoteServiceImplt(quoteRepositoryImplt);
+
         
 
-        Menu menu = new Menu(projectService, clientService, materialService, laborServiceImplt);
+        Menu menu = new Menu(projectService, clientService, materialService, laborServiceImplt, quoteServiceImplt);
         menu.displayMenu();
 
 

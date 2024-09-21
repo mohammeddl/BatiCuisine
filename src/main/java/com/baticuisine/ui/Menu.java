@@ -3,15 +3,18 @@ package main.java.com.baticuisine.ui;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Date;
 
 import main.java.com.baticuisine.model.Client;
 import main.java.com.baticuisine.model.Labor;
 import main.java.com.baticuisine.model.Material;
 import main.java.com.baticuisine.model.Project;
+import main.java.com.baticuisine.model.Quote;
 import main.java.com.baticuisine.service.client.ClientServiceImplt;
 import main.java.com.baticuisine.service.labor.LaborServiceImplt;
 import main.java.com.baticuisine.service.material.MaterialServiceImplt;
 import main.java.com.baticuisine.service.project.ProjectService;
+import main.java.com.baticuisine.service.quote.QuoteServiceImplt;
 
 public class Menu {
 
@@ -19,16 +22,18 @@ public class Menu {
     private final ClientServiceImplt clientService;
     private final MaterialServiceImplt materialServiceImplt;
     private final LaborServiceImplt laborServiceImplt;
+    private final QuoteServiceImplt quoteServiceImplt;
 
 
     private List<Material> materials = new ArrayList<>();
     private List<Labor> labors = new ArrayList<>();
 
-    public Menu(ProjectService projectService, ClientServiceImplt clientService, MaterialServiceImplt materialServiceImplt, LaborServiceImplt laborServiceImplt) {
+    public Menu(ProjectService projectService, ClientServiceImplt clientService, MaterialServiceImplt materialServiceImplt, LaborServiceImplt laborServiceImplt, QuoteServiceImplt quoteServiceImplt) {
         this.projectService = projectService;
         this.clientService = clientService;
         this.materialServiceImplt = materialServiceImplt;
         this.laborServiceImplt = laborServiceImplt;
+        this.quoteServiceImplt = quoteServiceImplt;
     }
 
     private Scanner scanner = new Scanner(System.in);
@@ -54,7 +59,7 @@ public class Menu {
                     dispalyProjects();
                     break;
                 case 3:
-                    System.out.println("Calculating project cost...");
+                    calculateProjectCost();
                     break;
                 case 4:
                     System.out.println("Quitting...");
@@ -109,7 +114,6 @@ public class Menu {
             addingComponents = scanner.nextLine().equalsIgnoreCase("yes");
         }
 
-
         double totalCost = calculateTotalCost();
         System.out.println("Total Cost: " + totalCost);
 
@@ -121,12 +125,21 @@ public class Menu {
         project.setMargeBeneficium(benefitAmount);
 
         projectService.calculateProjectBenefit(project);
+
+        System.out.println("Do you want to generate a quote for this project? (yes/no)");
+        scanner.nextLine(); 
+        String generateQuoteChoice = scanner.nextLine();
+    
+        if (generateQuoteChoice.equalsIgnoreCase("yes")) {
+            generateQuote(project, totalCost);
+        }
         materials.clear();
         labors.clear();
 
         System.out.println("Project created successfully with calculated total cost and benefit!");
     }
 
+    //adding material
     private void addMaterial(Project project) {
         System.out.println("--- Adding Material ---");
         System.out.print("Enter the name of the material: ");
@@ -146,6 +159,7 @@ public class Menu {
         System.out.println("Material added successfully!");
     }
 
+    //adding labor
     private void addLabor(Project project) {
         System.out.println("--- Adding Labor ---");
         System.out.print("Enter the name of the labor: ");
@@ -164,6 +178,7 @@ public class Menu {
         System.out.println("Labor added successfully!");
     }
 
+    //calculating total cost
     private double calculateTotalCost() {
         double totalMaterialCost = materials.stream()
                                     .mapToDouble(Material::calculateCost)
@@ -175,6 +190,7 @@ public class Menu {
         return totalMaterialCost + totalLaborCost;
     }
 
+    //creating new client
     private Client createNewClient() {
         int id = 1;
         System.out.print("Enter the client name: ");
@@ -194,9 +210,65 @@ public class Menu {
         clientService.addClient(client);
         return client;
     }
+    
 
-   public void  dispalyProjects() {
+    //generate quote project 
+    private void generateQuote(Project project, double totalCost) {
+        // Create a new quote
+        System.out.println("Generating quote for project: " + project.getProjectName());
+    
+        Date issueDate = new Date(); // Current date
+        Date validityDate = new Date(issueDate.getTime() + (7 * 24 * 60 * 60 * 1000)); 
+    
+        // Create a Quote object
+        Project projectId = projectService.getProjectByName(project.getProjectName());
+        Quote quote = new Quote(totalCost, issueDate, validityDate, false, projectId.getId()); 
+        quoteServiceImplt.addQuote(quote); 
+    
+        System.out.println("Quote generated successfully!");
+        System.out.println(quote);
+    
+        System.out.println("Do you want to accept this quote? (yes/no)");
+        String acceptQuoteChoice = scanner.nextLine();
+    
+        if (acceptQuoteChoice.equalsIgnoreCase("yes")) {
+            quote.setAccepted(true);
+            System.out.println("Quote accepted!");
+        } else {
+            System.out.println("Quote not accepted.");
+        }
+        quoteServiceImplt.updateQuote(quote);
+    }
+
+    // display projects
+    public void  dispalyProjects() {
         System.out.println("Displaying projects...");
         projectService.displayProjects();
+    }
+
+
+    //Calculate project cost
+    public void calculateProjectCost() {
+        Date issueDate = new Date(); 
+        Date validityDate = new Date(issueDate.getTime() + (7 * 24 * 60 * 60 * 1000)); 
+        dispalyProjects();
+        System.out.println("Enter the project name: ");
+        String projectName = scanner.nextLine();
+        Project projectId = projectService.getProjectByName(projectName);
+        Quote quote = new Quote(projectId.getTotalCost(), issueDate, validityDate, false, projectId.getId()); 
+        System.out.println("Quote generated successfully!");
+        System.out.println(quote);
+        quoteServiceImplt.addQuote(quote); 
+
+        System.out.println("Do you want to accept this quote? (yes/no)");
+        String acceptQuoteChoice = scanner.nextLine();
+    
+        if (acceptQuoteChoice.equalsIgnoreCase("yes")) {
+            quote.setAccepted(true);
+            System.out.println("Quote accepted!");
+        } else {
+            System.out.println("Quote not accepted.");
+        }
+        quoteServiceImplt.updateQuote(quote);
     }
 }

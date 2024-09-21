@@ -8,13 +8,14 @@ public class Quote {
     private Date issueDate;
     private Date validityDate;
     private boolean isAccepted;
+    private int projectId;
 
-    public Quote(int id, double estimatedAmount, Date issueDate, Date validityDate, boolean isAccepted) {
-        this.id = id;
+    public Quote(double estimatedAmount, Date issueDate, Date validityDate, boolean isAccepted, int projectId) {
         this.estimatedAmount = estimatedAmount;
         this.issueDate = issueDate;
         this.validityDate = validityDate;
         this.isAccepted = isAccepted;
+        this.projectId = projectId;
     }
 
     // Getters and Setters
@@ -58,8 +59,24 @@ public class Quote {
         isAccepted = accepted;
     }
 
-    public void generateQuote() {
-        // Logic to generate quote
+    public int getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(int projectId) {
+        this.projectId = projectId;
+    }
+
+    public void generateQuote(double totalMaterialCost, double totalLaborCost) {
+        this.estimatedAmount = totalMaterialCost + totalLaborCost;
+        this.issueDate = new Date(); // Set the current date as the issue date
+        this.validityDate = new Date(issueDate.getTime() + (7 * 24 * 60 * 60 * 1000)); // 7 days validity
+    }
+
+    @Override
+    public String toString() {
+        return "Quote [id=" + id + ", estimatedAmount=" + estimatedAmount + ", issueDate=" + issueDate
+                + ", validityDate=" + validityDate + ", isAccepted=" + isAccepted + "]";
     }
 }
 
