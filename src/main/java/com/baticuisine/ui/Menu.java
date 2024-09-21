@@ -156,7 +156,7 @@ public class Menu {
         int transportCost = scanner.nextInt();
         scanner.nextLine();
 
-        Project projectId = projectService.getProjectByName(project.getProjectName());
+        Project projectId = projectService.getProjectByName(project.getProjectName()).orElseThrow(() -> new RuntimeException("Project not found"));
         Material material = new Material(materialName, quantity, taxRate, transportCost, "Material", projectId.getId());
         materials.add(material);
         materialServiceImplt.addMaterial(material);
@@ -175,7 +175,7 @@ public class Menu {
         scanner.nextLine();
 
 
-        Project projectId = projectService.getProjectByName(project.getProjectName());
+        Project projectId = projectService.getProjectByName(project.getProjectName()).orElseThrow(() -> new RuntimeException("Project not found"));
         Labor labor = new Labor(laborName, hourlyRate, hours, "Labor", projectId.getId());
         labors.add(labor);
         laborServiceImplt.addLabor(labor);
@@ -231,11 +231,11 @@ public class Menu {
         
         System.out.println("Generating quote for project: " + project.getProjectName());
     
-        Date issueDate = new Date(); // Current date
+        Date issueDate = new Date(); 
         Date validityDate = new Date(issueDate.getTime() + (7 * 24 * 60 * 60 * 1000)); 
     
         // Create a Quote object
-        Project projectId = projectService.getProjectByName(project.getProjectName());
+        Project projectId = projectService.getProjectByName(project.getProjectName()).orElseThrow(() -> new RuntimeException("Project not found"));
         Quote quote = new Quote(discountedCost, issueDate, validityDate, false, projectId.getId()); 
         quoteServiceImplt.addQuote(quote); 
     
@@ -268,7 +268,7 @@ public class Menu {
         dispalyProjects();
         System.out.println("Enter the project name: ");
         String projectName = scanner.nextLine();
-        Project projectId = projectService.getProjectByName(projectName);
+        Project projectId = projectService.getProjectByName(projectName).orElseThrow(() -> new RuntimeException("Project not found"));
         Quote quote = new Quote(projectId.getTotalCost(), issueDate, validityDate, false, projectId.getId()); 
         System.out.println("Quote generated successfully!");
         System.out.println(quote);

@@ -4,6 +4,7 @@ import main.java.com.baticuisine.dao.ProjectDaoImplt;
 import main.java.com.baticuisine.model.Project;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class ProjectRepositoryImplt implements ProjectRepository {
     private final List<Project> projects = new ArrayList<>();
@@ -19,7 +20,7 @@ public class ProjectRepositoryImplt implements ProjectRepository {
         projectDaoImplt.addProject(project);
     }
 
-    public Project getProjectByName(String name) {
+    public Optional<Project> getProjectByName(String name) {
         return projectDaoImplt.getProjectByName(name);
     }
 

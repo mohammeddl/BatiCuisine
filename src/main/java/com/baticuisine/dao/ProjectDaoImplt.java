@@ -8,6 +8,7 @@ import main.java.com.baticuisine.model.Project;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.List;
+import java.util.Optional;
 
 public class ProjectDaoImplt implements ProjectDao {
 
@@ -45,18 +46,19 @@ public class ProjectDaoImplt implements ProjectDao {
         
     }
 
-    public Project getProjectByName(String name) {
+    public Optional<Project> getProjectByName(String name) {
         try{
             PreparedStatement preparedStatement = connection.prepareStatement(GET_PROJECT_BY_NAME);
             preparedStatement.setString(1, name);
             ResultSet resultSet = preparedStatement.executeQuery();
             if(resultSet.next()){
-                return new Project(resultSet.getString("projectname"), resultSet.getInt("client_id"), resultSet.getInt("id"), resultSet.getDouble("totalcost"));
+                Project project = new Project(resultSet.getString("projectname"), resultSet.getInt("client_id"), resultSet.getInt("id"), resultSet.getDouble("totalcost"));
+                return Optional.of(project);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
+        return Optional.empty();
     }
 
     public void addTotalCost(Project project) {
