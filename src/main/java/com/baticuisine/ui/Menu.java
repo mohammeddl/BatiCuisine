@@ -83,7 +83,7 @@ public class Menu {
         if (clientChoice == 1) {
             System.out.print("Enter the client's name: ");
             String clientName = scanner.nextLine();
-            client = clientService.getClientByName(clientName);
+            client = clientService.getClientByName(clientName).orElse(null);
             if(client == null) {
                 System.out.println("Client not found. Please add a new client.");
                 client = createNewClient();
@@ -211,7 +211,7 @@ public class Menu {
 
         Client clientNew = new Client(name, address, phone, isProfessional);
         clientService.addClient(clientNew);
-        Client client = clientService.getClientByName(name);
+        Client client = clientService.getClientByName(name).orElse(null);
 
         return client;
     }
