@@ -1,5 +1,7 @@
 package main.java.com.baticuisine.repository.quote;
 
+import java.util.Optional;
+
 import main.java.com.baticuisine.dao.quote.QuoteDaoImplt;
 import main.java.com.baticuisine.model.Quote;
 
@@ -17,8 +19,8 @@ public class QuoteRepositoryImplt implements QuoteRepository {
         quoteDaoImplt.addQuote(quote);
     }
     
-    public Quote getQuoteByClientName(String name) {
-        return quoteDaoImplt.getQuoteByClientName(name);
+    public Optional<Quote> getQuote(int projectId) {
+        return quoteDaoImplt.getQuote(projectId);
     }
 
     public void updateQuote(Quote quote) {

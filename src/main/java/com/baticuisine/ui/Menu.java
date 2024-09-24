@@ -315,7 +315,9 @@ public class Menu {
         Project projectId = projectService.getProjectByName(projectName).orElseThrow(() -> new RuntimeException("Project not found"));
         Quote quote = new Quote(projectId.getTotalCost(), issueDate, validityDate, false, projectId.getId()); 
         System.out.println("Quote generated successfully!");
-        System.out.println(quote);
+        Quote quoteResult = quoteServiceImplt.getQuote(projectId.getId()).orElse(null);
+        System.out.println(quoteResult);
+    
         quoteServiceImplt.addQuote(quote); 
 
         System.out.println("Do you want to accept this quote? (yes/no)");
