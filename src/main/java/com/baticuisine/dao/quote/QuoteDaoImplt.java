@@ -5,12 +5,15 @@ import main.java.com.baticuisine.model.Quote;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Optional;
 
 
 public class QuoteDaoImplt implements QuoteDao {
     private static final String INSERT_QUOTE = "INSERT INTO quote (estimatedamount, issuedate, validitydate, isaccepted, project_id) VALUES (?, ?, ?, ?, ?)";
     private static final String UPDATE_QUOTE = "UPDATE quote SET isaccepted = ? WHERE project_id = ?";
+    private static final String GET_QUOTE_BY_CLIENT_NAME = "SELECT * FROM quote WHERE project_id = ?";
 
     private final Connection connection;
 
@@ -44,8 +47,19 @@ public class QuoteDaoImplt implements QuoteDao {
         }
     }
     
-    public Quote getQuoteByClientName(String name) {
-        return null;
+    public Optional<Quote> getQuote(int idProject) {
+        try{
+            PreparedStatement preparedStatement = connection.prepareStatement(GET_QUOTE_BY_CLIENT_NAME);
+            preparedStatement.setInt(1, idProject);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if(resultSet.next()){
+                return Optional.of(new Quote(resultSet.getDouble("estimatedamount"), resultSet.getDate("issuedate"), resultSet.getDate("validitydate"), resultSet.getBoolean("isaccepted"), resultSet.getInt("project_id")));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return Optional.empty();
+        
     }
     
 }

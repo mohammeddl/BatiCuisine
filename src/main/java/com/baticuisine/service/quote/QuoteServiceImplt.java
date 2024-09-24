@@ -1,5 +1,7 @@
 package main.java.com.baticuisine.service.quote;
 
+import java.util.Optional;
+
 import main.java.com.baticuisine.model.Quote;
 import main.java.com.baticuisine.repository.quote.QuoteRepositoryImplt;
 
@@ -15,8 +17,8 @@ public class QuoteServiceImplt implements QuoteService {
         quoteRepositoryImplt.addQuote(quote);
     }
 
-    public Quote getQuoteByClientName(String name) {
-        return quoteRepositoryImplt.getQuoteByClientName(name);
+    public Optional<Quote> getQuote(int projectId) {
+        return quoteRepositoryImplt.getQuote(projectId);
     }
 
     public void updateQuote(Quote quote) {

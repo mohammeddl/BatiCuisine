@@ -14,10 +14,10 @@ public class ClientServiceImplt implements ClientService {
 
     public void addClient(Client client) {
         if (clientRepository.getClientByName(client.getName()) != null) {
-            System.out.println("Client with this name already exists.");
-        } else {
             clientRepository.addClient(client);
             System.out.println("Client added successfully.");
+        } else {
+            System.out.println("Client with this name already exists.");
         }
     }
 
