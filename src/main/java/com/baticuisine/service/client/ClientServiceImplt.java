@@ -1,5 +1,7 @@
 package main.java.com.baticuisine.service.client;
 
+import java.util.Optional;
+
 import main.java.com.baticuisine.model.Client;
 import main.java.com.baticuisine.repository.client.ClientRepository;
 
@@ -19,10 +21,10 @@ public class ClientServiceImplt implements ClientService {
         }
     }
 
-    public Client getClientByName(String name) {
-        Client client = clientRepository.getClientByName(name);
-        if (client != null) {
-            System.out.println("Client found: " + client.getName());
+    public Optional<Client> getClientByName(String name) {
+        Optional<Client> client = clientRepository.getClientByName(name);
+        if (client.isPresent()) {
+            System.out.println("Client found: " + client.get().getName());
         } else {
             System.out.println("Client not found.");
         }

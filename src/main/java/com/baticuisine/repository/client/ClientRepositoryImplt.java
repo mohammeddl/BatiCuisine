@@ -4,6 +4,7 @@ import main.java.com.baticuisine.dao.client.ClientDaoImplt;
 import main.java.com.baticuisine.model.Client;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class ClientRepositoryImplt implements ClientRepository {
 
@@ -20,7 +21,7 @@ public class ClientRepositoryImplt implements ClientRepository {
         clientDaoImplt.addClient(client);
     }
 
-    public Client getClientByName(String name) {
+    public Optional<Client> getClientByName(String name) {
        return clientDaoImplt.getClientByName(name);
     }
 

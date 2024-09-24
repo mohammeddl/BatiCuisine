@@ -5,6 +5,7 @@ import main.java.com.baticuisine.model.Client;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.Optional;
 
 public class ClientDaoImplt implements ClientDao {
 
@@ -32,18 +33,18 @@ public class ClientDaoImplt implements ClientDao {
     }
     }
 
-    public Client getClientByName(String name) {
+    public Optional<Client> getClientByName(String name) {
         try{
             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_CLIENT_BY_NAME);
             preparedStatement.setString(1, name);
             ResultSet resultSet = preparedStatement.executeQuery();
             if(resultSet.next()){
-                return new Client(resultSet.getInt("id"), resultSet.getString("name"), resultSet.getString("address"), resultSet.getString("phone"), resultSet.getBoolean("isProfessional"));
+                return Optional.of(new Client(resultSet.getInt("id"), resultSet.getString("name"), resultSet.getString("address"), resultSet.getString("phone"), resultSet.getBoolean("isProfessional")));
             }
         }catch (Exception e){
             e.printStackTrace();
         }
-        return null;
+        return Optional.empty();
     }
     
 }
