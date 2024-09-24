@@ -15,6 +15,7 @@ import main.java.com.baticuisine.service.labor.LaborServiceImplt;
 import main.java.com.baticuisine.service.material.MaterialServiceImplt;
 import main.java.com.baticuisine.service.project.ProjectService;
 import main.java.com.baticuisine.service.quote.QuoteServiceImplt;
+import main.java.com.baticuisine.util.InputValidator;
 
 public class Menu {
 
@@ -94,12 +95,15 @@ public class Menu {
 
         System.out.print("Enter the project name: ");
         String projectName = scanner.nextLine();
+        if(!InputValidator.isValidString(projectName)) {
+            System.out.println("Invalid project name. Please try again.");
+            return;
+        }
 
         Project project = new Project(projectName, client);
         projectService.addProject(project);
 
         boolean addingComponents = true;
-
         while (addingComponents) {
             System.out.println("--- Adding components ---");
             System.out.println("Enter type of component (material/labor): ");
@@ -148,19 +152,34 @@ public class Menu {
         System.out.println("--- Adding Material ---");
         System.out.print("Enter the name of the material: ");
         String materialName = scanner.nextLine();
+        if(!InputValidator.isValidString(materialName)) {
+            System.out.println("Invalid material name. Please try again.");
+            return;
+        }
         System.out.print("Enter the quantity of the material: ");
         int quantity = scanner.nextInt();
+        if(!InputValidator.isValidPositiveInteger(String.valueOf(quantity))) {
+            System.out.println("Invalid quantity. Please try again.");
+            return;
+        }
         System.out.print("Enter the tax rate of the material: ");
         int taxRate = scanner.nextInt();
+        if(!InputValidator.isValidPositiveInteger(String.valueOf(taxRate))) {
+            System.out.println("Invalid tax rate. Please try again.");
+            return;
+        }
         System.out.print("Enter the transport cost of the material: ");
         int transportCost = scanner.nextInt();
+        if(!InputValidator.isValidPositiveInteger(String.valueOf(transportCost))) {
+            System.out.println("Invalid transport cost. Please try again.");
+            return;
+        }
         scanner.nextLine();
 
         Project projectId = projectService.getProjectByName(project.getProjectName()).orElseThrow(() -> new RuntimeException("Project not found"));
         Material material = new Material(materialName, quantity, taxRate, transportCost, "Material", projectId.getId());
         materials.add(material);
         materialServiceImplt.addMaterial(material);
-        System.out.println("Material added successfully!");
     }
 
     //adding labor
@@ -168,10 +187,22 @@ public class Menu {
         System.out.println("--- Adding Labor ---");
         System.out.print("Enter the name of the labor: ");
         String laborName = scanner.nextLine();
+        if(!InputValidator.isValidString(laborName)) {
+            System.out.println("Invalid labor name. Please try again.");
+            return;
+        }
         System.out.print("Enter the hourly rate: ");
         int hourlyRate = scanner.nextInt();
+        if(!InputValidator.isValidPositiveInteger(String.valueOf(hourlyRate))) {
+            System.out.println("Invalid hourly rate. Please try again.");
+            return;
+        }
         System.out.print("Enter the number of hours: ");
         int hours = scanner.nextInt();
+        if(!InputValidator.isValidPositiveInteger(String.valueOf(hours))) {
+            System.out.println("Invalid number of hours. Please try again.");
+            return;
+        }
         scanner.nextLine();
 
         Project projectId = projectService.getProjectByName(project.getProjectName()).orElseThrow(() -> new RuntimeException("Project not found"));
@@ -196,13 +227,25 @@ public class Menu {
     private Client createNewClient() {
         System.out.print("Enter the client name: ");
         String name = scanner.nextLine();
+        if(!InputValidator.isValidString(name)) {
+            System.out.println("Invalid client name. Please try again.");
+            return null;
+        }
 
         System.out.print("Enter the client address: ");
         String address = scanner.nextLine();
+        if(!InputValidator.isValidString(address)) {
+            System.out.println("Invalid client address. Please try again.");
+            return null;
+        }
 
         System.out.print("Enter the client phone number: ");
         String phone = scanner.nextLine();
-
+        if(!InputValidator.isValidString(phone)) {
+            System.out.println("Invalid client phone number. Please try again.");
+            return null;
+        }
+        
         System.out.print("Is the client a professional? (true/false): ");
         boolean isProfessional = scanner.nextBoolean();
         scanner.nextLine(); 

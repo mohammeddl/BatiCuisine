@@ -13,6 +13,7 @@ public class MaterialServiceImplt implements MaterialService {
 
     public void addMaterial(Material material) {
         materialRepositoryImplt.addMaterial(material);
+        System.out.println("Material added successfully!");
         
     }
     
