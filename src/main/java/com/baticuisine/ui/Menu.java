@@ -174,12 +174,10 @@ public class Menu {
         int hours = scanner.nextInt();
         scanner.nextLine();
 
-
         Project projectId = projectService.getProjectByName(project.getProjectName()).orElseThrow(() -> new RuntimeException("Project not found"));
         Labor labor = new Labor(laborName, hourlyRate, hours, "Labor", projectId.getId());
         labors.add(labor);
         laborServiceImplt.addLabor(labor);
-        System.out.println("Labor added successfully!");
     }
 
     //calculating total cost
@@ -264,7 +262,7 @@ public class Menu {
     }
 
 
-    //Calculate project cost
+    //calculate project cost
     public void calculateProjectCost() {
         Date issueDate = new Date(); 
         Date validityDate = new Date(issueDate.getTime() + (7 * 24 * 60 * 60 * 1000)); 
@@ -279,7 +277,7 @@ public class Menu {
 
         System.out.println("Do you want to accept this quote? (yes/no)");
         String acceptQuoteChoice = scanner.nextLine();
-    
+        
         if (acceptQuoteChoice.equalsIgnoreCase("yes")) {
             quote.setAccepted(true);
             System.out.println("Quote accepted!");
@@ -289,6 +287,7 @@ public class Menu {
         quoteServiceImplt.updateQuote(quote);
     }
 
+    // calculate discount percentage
     private double getDiscountPercentage(Client client) {
         if (client.isProfessional()) { 
             return 10.0; 
