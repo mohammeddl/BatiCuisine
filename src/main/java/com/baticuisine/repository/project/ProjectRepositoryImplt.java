@@ -25,8 +25,8 @@ public class ProjectRepositoryImplt implements ProjectRepository {
     }
 
 
-    public List<Project> getAllProjects() {
-        return projectDaoImplt.getAllProjects();
+    public Optional<Project> getAllProjectsWithClient(String name) {
+        return projectDaoImplt.getAllProjectsWithClient(name);
     }
 
     public void addTotalAndbinifit(Project project) {
@@ -35,5 +35,9 @@ public class ProjectRepositoryImplt implements ProjectRepository {
 
     public void updateProject(Project project) {
         projectDaoImplt.updateProject(project);
+    }
+
+    public List<Project> displayProjects() {
+        return projectDaoImplt.displayProjects();
     }
 }

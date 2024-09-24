@@ -24,8 +24,8 @@ public class ProjectService {
         return projectRepositoryImplt.getProjectByName(name);
     }
 
-    public void displayProjects() {
-       projectRepositoryImplt.getAllProjects(); 
+    public Optional<Project> getAllProjectsWithClient(String name) {
+        return projectRepositoryImplt.getAllProjectsWithClient(name);
     }
 
     public void updateProject(Project project) {
@@ -33,7 +33,6 @@ public class ProjectService {
     }
 
     public void calculateProjectCost(String projectName) {
-        // Using ifPresentOrElse to handle both cases (project found or not)
         projectRepositoryImplt.getProjectByName(projectName).ifPresentOrElse(
             project -> {
                 double totalCost = project.calculateTotalCost();
@@ -45,6 +44,10 @@ public class ProjectService {
 
     public void calculateProjectBenefit(Project project) {
         projectRepositoryImplt.addTotalAndbinifit(project);
+    }
+
+    public List<Project> displayProjects() {
+        return projectRepositoryImplt.displayProjects();
     }
 
 

@@ -2,6 +2,7 @@ package main.java.com.baticuisine.ui;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 import java.util.Date;
 
@@ -301,36 +302,83 @@ public class Menu {
     // display projects
     public void  dispalyProjects() {
         System.out.println("Displaying projects...");
-        projectService.displayProjects();
+        List<Project> allProject =   projectService.displayProjects();
+        for (Project project : allProject) {
+            System.out.println("Project Name: " + project.getProjectName()+ " Project Status: "+ project.getProjectStatus()+ " Total Cost: "+ project.getTotalCost());
+        }
     }
 
 
     //calculate project cost
     public void calculateProjectCost() {
+        // Get current date and set validity to one week from the issue date
         Date issueDate = new Date(); 
         Date validityDate = new Date(issueDate.getTime() + (7 * 24 * 60 * 60 * 1000)); 
+        
+        // Display available projects
         dispalyProjects();
+        
+        // Ask user to input the project name
         System.out.println("Enter the project name: ");
         String projectName = scanner.nextLine();
-        Project projectId = projectService.getProjectByName(projectName).orElseThrow(() -> new RuntimeException("Project not found"));
-        Quote quote = new Quote(projectId.getTotalCost(), issueDate, validityDate, false, projectId.getId()); 
-        System.out.println("Quote generated successfully!");
-        Quote quoteResult = quoteServiceImplt.getQuote(projectId.getId()).orElse(null);
-        System.out.println(quoteResult);
-    
-        quoteServiceImplt.addQuote(quote); 
+        
+        // Retrieve the project based on the project name
+        Project project = projectService.getProjectByName(projectName)
+            .orElseThrow(() -> new RuntimeException("Project not found"));
 
+            System.out.println("project values" + project);
+    
+        // Create a new quote based on the total cost of the project
+        Quote quote = new Quote(project.getTotalCost(), issueDate, validityDate, false, project.getId());
+        
+        // Add or fetch the quote for the project
+        quoteServiceImplt.getQuote(project.getId()).ifPresentOrElse(
+            existingQuote -> {
+                // If quote exists, update it
+                System.out.println("Quote already exists, displaying details:");
+                displayQuoteDetails(existingQuote, project);
+            },
+            () -> {
+                // If no existing quote, add the new one
+                quoteServiceImplt.addQuote(quote);
+                System.out.println("New Quote generated successfully!");
+                displayQuoteDetails(quote, project);
+            }
+        );
+        
+        // Ask if the user wants to accept the quote
         System.out.println("Do you want to accept this quote? (yes/no)");
         String acceptQuoteChoice = scanner.nextLine();
         
         if (acceptQuoteChoice.equalsIgnoreCase("yes")) {
             quote.setAccepted(true);
+            project.setProjectStatus("terminated");
             System.out.println("Quote accepted!");
         } else {
+            project.setProjectStatus("annulled");
             System.out.println("Quote not accepted.");
         }
+        
+        // Update the project and quote status in the database
+        projectService.updateProject(project);
         quoteServiceImplt.updateQuote(quote);
     }
+
+    private void displayQuoteDetails(Quote quote, Project project) {
+        Optional<Project> projects = projectService.getAllProjectsWithClient(project.getProjectName());
+        System.out.println("tests"+ projects.get().getClient().getName());
+        System.out.println("=== Project Details ===");
+        System.out.println("Project Name: " + project.getProjectName());
+        System.out.println("Client: name: " + projects.get().getClient().getName()+" address: "+ projects.get().getClient().getAddress()+" phone: "+ projects.get().getClient().getPhone()+" isProfessional: "+ projects.get().getClient().isProfessional());
+       
+        System.out.println("=== Quote Details ===");
+        System.out.println("Estimated Amount: " + quote.getEstimatedAmount());
+        System.out.println("Issue Date: " + quote.getIssueDate());
+        System.out.println("Validity Date: " + quote.getValidityDate());
+        System.out.println("Is Accepted: " + (quote.isAccepted() ? "Yes" : "No"));
+    }
+    
+    
 
     // calculate discount percentage
     private double getDiscountPercentage(Client client) {

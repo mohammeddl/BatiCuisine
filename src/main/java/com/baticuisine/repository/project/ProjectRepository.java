@@ -7,8 +7,9 @@ import java.util.Optional;
 public interface ProjectRepository {
     void addProject(Project project);
     Optional<Project> getProjectByName(String name);
-    List<Project> getAllProjects();
+    Optional<Project> getAllProjectsWithClient(String name);
     void addTotalAndbinifit(Project project);
     void updateProject(Project project);
+    List<Project> displayProjects();
 
 }
