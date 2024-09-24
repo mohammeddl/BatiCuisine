@@ -11,7 +11,8 @@ public interface ProjectDao {
     public void addProject(Project project);
     Optional<Project> getProjectByName(String name);
     public void addTotalCost(Project project);
-    List<Project> getAllProjects();
+    Optional<Project> getAllProjectsWithClient(String name);
     public void updateProject(Project project);
+    List<Project> displayProjects();
     
 }

@@ -44,6 +44,11 @@ public class Project {
         this.totalCost = totalCost;
     }
 
+    public Project(String projectName, double totalCost, Client client) {
+        this.projectName = projectName;
+        this.client = client;
+    }
+
     // Getters and Setters
     public int getId() {
         return id;
